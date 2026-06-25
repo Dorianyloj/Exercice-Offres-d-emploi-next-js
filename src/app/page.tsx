@@ -4,59 +4,23 @@ import { PrismicRichText } from "@prismicio/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { JobCard } from "@/components/JobCard";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
-import { createClient } from "@/prismicio";
+import { JobsGrid } from "@/components/JobsGrid";
+import { PageShell } from "@/components/PageShell";
+import { getJobOffers, getSingleOrNull } from "@/lib/prismicQueries";
 import type {
   FooterDocument,
   HeaderDocument,
   HomepageDocument,
-  JobOfferDocument,
 } from "@/types/prismic";
 
 export const dynamic = "force-dynamic";
-
-async function getSingleOrNull<TDocument extends prismic.Content.AllDocumentTypes>(
-  type: TDocument["type"],
-) {
-  const client = createClient();
-
-  try {
-    return await client.getSingle<TDocument>(type);
-  } catch {
-    return null;
-  }
-}
-
-async function getLatestJobOffers() {
-  const client = createClient();
-
-  try {
-    return await client.getAllByType<JobOfferDocument>("job_offer", {
-      limit: 6,
-      orderings: [
-        {
-          field: "my.job_offer.published_at",
-          direction: "desc",
-        },
-        {
-          field: "document.first_publication_date",
-          direction: "desc",
-        },
-      ],
-    });
-  } catch {
-    return [];
-  }
-}
 
 export default async function Home() {
   const [header, footer, homepage, jobs] = await Promise.all([
     getSingleOrNull<HeaderDocument>("header"),
     getSingleOrNull<FooterDocument>("footer"),
     getSingleOrNull<HomepageDocument>("homepage"),
-    getLatestJobOffers(),
+    getJobOffers({ limit: 6 }),
   ]);
 
   const homepageTitle =
@@ -65,9 +29,7 @@ export default async function Home() {
       : "Les dernières offres d'emploi";
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <SiteHeader header={header} />
-
+    <PageShell header={header} footer={footer}>
       <main>
         <section className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -127,21 +89,15 @@ export default async function Home() {
             </Link>
           </div>
 
-          {jobs.length > 0 ? (
-            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {jobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
-            </div>
-          ) : (
-            <div className="mt-8 rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
-              Aucune offre publiée pour le moment.
-            </div>
-          )}
+          <div className="mt-8">
+            <JobsGrid
+              jobs={jobs}
+              emptyMessage="Aucune offre publiée pour le moment."
+              className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+            />
+          </div>
         </section>
       </main>
-
-      <SiteFooter footer={footer} />
-    </div>
+    </PageShell>
   );
 }
