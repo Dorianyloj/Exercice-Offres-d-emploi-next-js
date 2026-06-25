@@ -2,6 +2,7 @@ import * as prismic from "@prismicio/client";
 import Link from "next/link";
 
 import { MaterialSymbol } from "@/components/MaterialSymbol";
+import { PinJobButton } from "@/components/PinJobButton";
 import { getTagHref } from "@/lib/tags";
 import type { JobOfferDocument } from "@/types/prismic";
 
@@ -27,13 +28,7 @@ export function JobCard({ job }: { job: JobOfferDocument }) {
             {title}
           </Link>
         </h2>
-        <button
-          type="button"
-          className="inline-flex h-6 w-6 shrink-0 items-center justify-center text-[var(--dark)]"
-          aria-label="Enregistrer l'offre"
-        >
-          <MaterialSymbol name="bookmark_border" className="text-[22px]" />
-        </button>
+        <PinJobButton job={job} title={title} />
       </div>
 
       <div className="mt-5 space-y-2 text-xs font-semibold text-[var(--primary)]">

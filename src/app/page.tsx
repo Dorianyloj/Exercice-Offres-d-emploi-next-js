@@ -1,7 +1,5 @@
 import * as prismic from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
-import { PrismicRichText } from "@prismicio/react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { JobsGrid } from "@/components/JobsGrid";
