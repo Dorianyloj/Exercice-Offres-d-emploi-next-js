@@ -92,12 +92,6 @@ export function JobCard({ job }: { job: JobOfferDocument }) {
           >
             {job.data.is_available ? "Disponible" : "Indisponible"}
           </span>
-          <Link
-            href={job.url || `/offres/${job.uid}`}
-            className="text-xs font-semibold text-[var(--primary)] underline-offset-2 hover:underline"
-          >
-            Voir l&apos;offre
-          </Link>
         </div>
       </div>
     </article>
