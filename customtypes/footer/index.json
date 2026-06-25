@@ -1,0 +1,25 @@
+{
+  "id": "footer",
+  "label": "Footer",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "text": {
+        "type": "StructuredText",
+        "config": {
+          "single": "paragraph",
+          "label": "Texte"
+        }
+      },
+      "copyright": {
+        "type": "Text",
+        "config": {
+          "label": "Copyright",
+          "placeholder": "© 2026 Offres d'emploi"
+        }
+      }
+    }
+  }
+}

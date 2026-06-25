@@ -1,0 +1,28 @@
+{
+  "id": "logo",
+  "type": "SharedSlice",
+  "name": "Logo",
+  "description": "Logo affiché dans le header.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "Logo du site.",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Logo",
+            "constraint": {
+              "width": 220,
+              "height": 80
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

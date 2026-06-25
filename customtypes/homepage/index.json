@@ -1,0 +1,37 @@
+{
+  "id": "homepage",
+  "label": "Homepage",
+  "format": "page",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1",
+          "label": "Titre"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "single": "paragraph",
+          "label": "Description"
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Contenu",
+        "config": {
+          "label": "Slices",
+          "choices": {
+            "homepage_image": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}

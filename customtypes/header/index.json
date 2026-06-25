@@ -1,0 +1,36 @@
+{
+  "id": "header",
+  "label": "Header",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "site_name": {
+        "type": "Text",
+        "config": {
+          "label": "Nom du site",
+          "placeholder": "Offres d'emploi"
+        }
+      },
+      "background_color": {
+        "type": "Color",
+        "config": {
+          "label": "Couleur du header"
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Logo",
+        "config": {
+          "label": "Slices",
+          "choices": {
+            "logo": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}
