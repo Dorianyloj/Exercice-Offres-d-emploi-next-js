@@ -20,15 +20,13 @@
           "label": "Description"
         }
       },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Contenu",
+      "image": {
+        "type": "Image",
         "config": {
-          "label": "Slices",
-          "choices": {
-            "homepage_image": {
-              "type": "SharedSlice"
-            }
+          "label": "Image",
+          "constraint": {
+            "width": 1440,
+            "height": 560
           }
         }
       }

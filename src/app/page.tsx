@@ -1,9 +1,13 @@
 import * as prismic from "@prismicio/client";
-import { PrismicRichText, SliceZone } from "@prismicio/react";
+import { PrismicNextImage } from "@prismicio/next";
+import { PrismicRichText } from "@prismicio/react";
+import Image from "next/image";
 import Link from "next/link";
 
+import { JobCard } from "@/components/JobCard";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { createClient } from "@/prismicio";
-import { components } from "@/slices";
 import type {
   FooterDocument,
   HeaderDocument,
@@ -47,149 +51,6 @@ async function getLatestJobOffers() {
   }
 }
 
-function ProfileIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a7.5 7.5 0 0 1 15 0"
-      />
-    </svg>
-  );
-}
-
-function SiteHeader({ header }: { header: HeaderDocument | null }) {
-  const siteName = header?.data.site_name || "Offres d'emploi";
-  const hasLogoSlice = Boolean(header?.data.slices?.length);
-  const headerBackgroundColor = header?.data.background_color;
-  const backgroundColor =
-    typeof headerBackgroundColor === "string" &&
-    /^#[0-9a-f]{6}$/i.test(headerBackgroundColor)
-      ? headerBackgroundColor
-      : undefined;
-
-  return (
-    <header
-      className="border-b border-slate-200 bg-white"
-      style={{ backgroundColor }}
-    >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3">
-          {hasLogoSlice ? (
-            <>
-              <SliceZone
-                slices={header?.data.slices || []}
-                components={components}
-              />
-              <span className="sr-only">{siteName}</span>
-            </>
-          ) : (
-            <span className="text-lg font-semibold text-slate-950">
-              {siteName}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/profil"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-          aria-label="Profil"
-        >
-          <ProfileIcon />
-        </Link>
-      </div>
-    </header>
-  );
-}
-
-function JobCard({ job }: { job: JobOfferDocument }) {
-  const title = prismic.asText(job.data.title) || "Offre sans titre";
-  const excerpt = prismic.asText(job.data.excerpt);
-  const publishedAt = job.data.published_at
-    ? new Intl.DateTimeFormat("fr-FR", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }).format(new Date(job.data.published_at))
-    : null;
-
-  return (
-    <article className="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5">
-      <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
-        {job.data.contract_type ? <span>{job.data.contract_type}</span> : null}
-        {job.data.location ? <span>{job.data.location}</span> : null}
-        {publishedAt ? <span>{publishedAt}</span> : null}
-      </div>
-
-      <h2 className="mt-3 text-xl font-semibold leading-7 text-slate-950">
-        <Link href={job.url || `/offres/${job.uid}`} className="hover:underline">
-          {title}
-        </Link>
-      </h2>
-
-      {job.data.company ? (
-        <p className="mt-1 text-sm font-medium text-slate-700">
-          {job.data.company}
-        </p>
-      ) : null}
-
-      {excerpt ? (
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-          {excerpt}
-        </p>
-      ) : null}
-
-      {job.tags.length > 0 ? (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {job.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      ) : null}
-
-      <div className="mt-auto pt-5">
-        <span
-          className={
-            job.data.is_available
-              ? "text-sm font-medium text-emerald-700"
-              : "text-sm font-medium text-red-700"
-          }
-        >
-          {job.data.is_available ? "Disponible" : "Indisponible"}
-        </span>
-      </div>
-    </article>
-  );
-}
-
-function SiteFooter({ footer }: { footer: FooterDocument | null }) {
-  return (
-    <footer className="mt-16 border-t border-slate-200 bg-white">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-slate-500 sm:px-6 lg:px-8">
-        {footer?.data.text ? (
-          <PrismicRichText field={footer.data.text} />
-        ) : (
-          <p>Mini-application Next.js connectée à Prismic.</p>
-        )}
-        <p>{footer?.data.copyright || "© 2026 Offres d'emploi"}</p>
-      </div>
-    </footer>
-  );
-}
-
 export default async function Home() {
   const [header, footer, homepage, jobs] = await Promise.all([
     getSingleOrNull<HeaderDocument>("header"),
@@ -226,15 +87,27 @@ export default async function Home() {
           </div>
         </section>
 
-        {homepage?.data.slices?.length ? (
-          <SliceZone slices={homepage.data.slices} components={components} />
-        ) : (
-          <section className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-64 items-center justify-center rounded-lg border border-slate-200 bg-white text-sm text-slate-500 sm:h-80 lg:h-[360px]">
-              Image homepage à ajouter dans Prismic
-            </div>
-          </section>
-        )}
+        <section className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+            {homepage && prismic.isFilled.image(homepage.data.image) ? (
+              <PrismicNextImage
+                field={homepage.data.image}
+                fallbackAlt=""
+                className="h-64 w-full object-cover sm:h-80 lg:h-[360px]"
+                priority
+              />
+            ) : (
+              <Image
+                src="/homepage-hero.png"
+                alt=""
+                width={1440}
+                height={560}
+                className="h-64 w-full object-cover sm:h-80 lg:h-[360px]"
+                priority
+              />
+            )}
+          </div>
+        </section>
 
         <section className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">

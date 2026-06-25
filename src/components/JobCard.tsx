@@ -1,6 +1,7 @@
 import * as prismic from "@prismicio/client";
 import Link from "next/link";
 
+import { getTagHref } from "@/lib/tags";
 import type { JobOfferDocument } from "@/types/prismic";
 
 export function JobCard({ job }: { job: JobOfferDocument }) {
@@ -43,12 +44,13 @@ export function JobCard({ job }: { job: JobOfferDocument }) {
       {job.tags.length > 0 ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {job.tags.map((tag) => (
-            <span
+            <Link
               key={tag}
+              href={getTagHref(tag)}
               className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700"
             >
               {tag}
-            </span>
+            </Link>
           ))}
         </div>
       ) : null}

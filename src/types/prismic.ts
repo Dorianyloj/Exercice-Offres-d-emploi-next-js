@@ -17,14 +17,6 @@ export type FooterDocument = prismic.PrismicDocument<
   "footer"
 >;
 
-export type HomepageImageSlice = prismic.Slice<
-  "homepage_image",
-  {
-    image: prismic.ImageField;
-    caption: prismic.KeyTextField;
-  }
->;
-
 export type LogoSlice = prismic.Slice<
   "logo",
   {
@@ -36,7 +28,7 @@ export type HomepageDocument = prismic.PrismicDocument<
   {
     title: prismic.TitleField;
     description: prismic.RichTextField;
-    slices: prismic.SliceZone<HomepageImageSlice>;
+    image: prismic.ImageField;
   },
   "homepage"
 >;

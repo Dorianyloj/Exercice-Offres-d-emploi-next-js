@@ -1,28 +1,9 @@
-import * as prismic from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/MaterialSymbol";
 import { components } from "@/slices";
 import type { HeaderDocument } from "@/types/prismic";
-
-function ProfileIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a7.5 7.5 0 0 1 15 0"
-      />
-    </svg>
-  );
-}
 
 export function SiteHeader({ header }: { header: HeaderDocument | null }) {
   const siteName = header?.data.site_name || "Offres d'emploi";
@@ -61,7 +42,7 @@ export function SiteHeader({ header }: { header: HeaderDocument | null }) {
           className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Profil"
         >
-          <ProfileIcon />
+          <MaterialSymbol name="account_circle" className="text-[22px]" />
         </Link>
       </div>
     </header>
