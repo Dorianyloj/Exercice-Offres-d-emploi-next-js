@@ -1,16 +1,15 @@
 import * as prismic from "@prismicio/client";
 import { PrismicRichText } from "@prismicio/react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { MaterialSymbol } from "@/components/MaterialSymbol";
 import { PageShell } from "@/components/PageShell";
 import { PageTitle } from "@/components/PageTitle";
+import { TechnologyTagList } from "@/components/TechnologyTagList";
 import {
   getJobOfferByUID,
   getSingleOrNull,
 } from "@/lib/prismicQueries";
-import { getTagHref } from "@/lib/tags";
 import type { FooterDocument, HeaderDocument } from "@/types/prismic";
 import { JobMessageForm } from "./_components/JobMessageForm";
 
@@ -66,22 +65,7 @@ export default async function JobOfferPage({ params }: JobOfferPageProps) {
             </div>
           ) : null}
 
-          {job.tags.length > 0 ? (
-            <div className="mt-4 flex items-start gap-2 text-sm font-semibold text-[var(--primary)]">
-              <MaterialSymbol name="code" className="text-[18px]" />
-              <div className="flex flex-wrap gap-x-2 gap-y-1">
-                {job.tags.map((tag) => (
-                  <Link
-                    key={tag}
-                    href={getTagHref(tag)}
-                    className="underline-offset-2 hover:underline"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : null}
+          <TechnologyTagList tags={job.tags} />
 
           <div className="mt-8 max-w-none text-base leading-8 text-slate-700">
             <PrismicRichText field={job.data.content} />

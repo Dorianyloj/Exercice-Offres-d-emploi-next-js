@@ -5,6 +5,7 @@ import { JobCountBadge } from "@/components/JobCountBadge";
 import { JobsGrid } from "@/components/JobsGrid";
 import { PageShell } from "@/components/PageShell";
 import { PageTitle } from "@/components/PageTitle";
+import { TechnologyTagList } from "@/components/TechnologyTagList";
 import { getJobOffers, getSingleOrNull } from "@/lib/prismicQueries";
 import { getTechnologyTags } from "@/lib/tags";
 import type {
@@ -12,7 +13,6 @@ import type {
   HeaderDocument,
   JobListDocument,
 } from "@/types/prismic";
-import { TechnologyTagList } from "./_components/TechnologyTagList";
 
 export const dynamic = "force-dynamic";
 
