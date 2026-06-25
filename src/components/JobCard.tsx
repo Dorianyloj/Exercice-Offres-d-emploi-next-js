@@ -1,6 +1,7 @@
 import * as prismic from "@prismicio/client";
 import Link from "next/link";
 
+import { MaterialSymbol } from "@/components/MaterialSymbol";
 import { getTagHref } from "@/lib/tags";
 import type { JobOfferDocument } from "@/types/prismic";
 
@@ -10,61 +11,94 @@ export function JobCard({ job }: { job: JobOfferDocument }) {
   const publishedAt = job.data.published_at
     ? new Intl.DateTimeFormat("fr-FR", {
         day: "2-digit",
-        month: "long",
+        month: "2-digit",
         year: "numeric",
       }).format(new Date(job.data.published_at))
     : null;
 
   return (
-    <article className="flex h-full flex-col rounded-lg border border-slate-200 bg-white p-5">
-      <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-500">
-        {job.data.contract_type ? <span>{job.data.contract_type}</span> : null}
-        {job.data.location ? <span>{job.data.location}</span> : null}
-        {publishedAt ? <span>{publishedAt}</span> : null}
+    <article className="flex min-h-[225px] flex-col bg-[var(--light)] px-5 py-8">
+      <div className="flex items-start justify-between gap-4">
+        <h2 className="text-xl font-bold leading-none text-black">
+          <Link
+            href={job.url || `/offres/${job.uid}`}
+            className="hover:underline"
+          >
+            {title}
+          </Link>
+        </h2>
+        <button
+          type="button"
+          className="inline-flex h-6 w-6 shrink-0 items-center justify-center text-[var(--dark)]"
+          aria-label="Enregistrer l'offre"
+        >
+          <MaterialSymbol name="bookmark_border" className="text-[22px]" />
+        </button>
       </div>
 
-      <h2 className="mt-3 text-xl font-semibold leading-7 text-slate-950">
-        <Link href={job.url || `/offres/${job.uid}`} className="hover:underline">
-          {title}
-        </Link>
-      </h2>
+      <div className="mt-5 space-y-2 text-xs font-semibold text-[var(--primary)]">
+        {publishedAt ? (
+          <div className="flex items-center gap-2">
+            <MaterialSymbol name="calendar_month" className="text-[18px]" />
+            <span>{publishedAt}</span>
+          </div>
+        ) : null}
 
-      {job.data.company ? (
-        <p className="mt-1 text-sm font-medium text-slate-700">
-          {job.data.company}
-        </p>
-      ) : null}
+        {job.tags.length > 0 ? (
+          <div className="flex items-start gap-2">
+            <MaterialSymbol name="code" className="text-[18px]" />
+            <div className="flex flex-wrap gap-x-1 gap-y-1">
+              {job.tags.map((tag, index) => (
+                <Link
+                  key={tag}
+                  href={getTagHref(tag)}
+                  className="underline-offset-2 hover:underline"
+                >
+                  {tag}
+                  {index < job.tags.length - 1 ? "," : ""}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
 
-      {excerpt ? (
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
-          {excerpt}
-        </p>
-      ) : null}
-
-      {job.tags.length > 0 ? (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {job.tags.map((tag) => (
-            <Link
-              key={tag}
-              href={getTagHref(tag)}
-              className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700"
-            >
-              {tag}
-            </Link>
-          ))}
+      {job.data.company || job.data.contract_type || job.data.location ? (
+        <div className="mt-5 flex flex-wrap gap-2 text-xs font-medium text-slate-500">
+          {job.data.company ? <span>{job.data.company}</span> : null}
+          {job.data.contract_type ? <span>{job.data.contract_type}</span> : null}
+          {job.data.location ? <span>{job.data.location}</span> : null}
         </div>
       ) : null}
 
-      <div className="mt-auto pt-5">
-        <span
-          className={
-            job.data.is_available
-              ? "text-sm font-medium text-emerald-700"
-              : "text-sm font-medium text-red-700"
-          }
-        >
-          {job.data.is_available ? "Disponible" : "Indisponible"}
-        </span>
+      {excerpt ? (
+        <p className="mt-4 line-clamp-3 text-sm font-medium leading-normal text-black">
+          {excerpt}
+        </p>
+      ) : (
+        <p className="mt-4 text-sm font-medium leading-normal text-black">
+          Voir le détail de cette offre d&apos;emploi.
+        </p>
+      )}
+
+      <div className="mt-auto pt-4">
+        <div className="flex items-center justify-between gap-3">
+          <span
+            className={
+              job.data.is_available
+                ? "text-xs font-semibold text-emerald-700"
+                : "text-xs font-semibold text-red-700"
+            }
+          >
+            {job.data.is_available ? "Disponible" : "Indisponible"}
+          </span>
+          <Link
+            href={job.url || `/offres/${job.uid}`}
+            className="text-xs font-semibold text-[var(--primary)] underline-offset-2 hover:underline"
+          >
+            Voir l&apos;offre
+          </Link>
+        </div>
       </div>
     </article>
   );

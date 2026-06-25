@@ -42,7 +42,7 @@ export function SiteHeader({ header }: { header: HeaderDocument | null }) {
           className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
           aria-label="Profil"
         >
-          <MaterialSymbol name="account_circle" className="text-[22px]" />
+          <MaterialSymbol name="account_circle" className="text-[22px] white" />
         </Link>
       </div>
     </header>

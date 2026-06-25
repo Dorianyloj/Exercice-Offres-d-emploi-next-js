@@ -66,15 +66,16 @@ export default async function JobsPage() {
   const jobCountLabel = `${jobs.length} ${jobs.length > 1 ? "offres" : "offre"}`;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--background)]">
       <SiteHeader header={header} />
 
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-3xl">
-            <h1 className="mt-2 text-4xl font-semibold leading-tight text-slate-950">
+            <h1 className="text-5xl font-medium leading-none text-[var(--dark)]">
               {title}
             </h1>
+            <div className="mt-3 h-1 w-full max-w-[420px] bg-[var(--primary)]" />
             {page?.data.description?.length ? (
               <div className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
                 <PrismicRichText field={page.data.description} />
@@ -87,8 +88,8 @@ export default async function JobsPage() {
             )}
           </div>
 
-          <div className="inline-flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-800">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-slate-950 text-white">
+          <div className="inline-flex items-center gap-3 bg-white px-4 py-3 text-[var(--dark)]">
+            <span className="inline-flex h-10 w-10 items-center justify-center bg-[var(--primary)] text-white">
               <MaterialSymbol name="business_center" className="text-[22px]" />
             </span>
             <span className="text-lg font-semibold">{jobCountLabel}</span>
@@ -105,7 +106,7 @@ export default async function JobsPage() {
                 <Link
                   key={tag}
                   href={getTagHref(tag)}
-                  className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100"
+                  className="border-2 border-[var(--primary)] bg-[var(--medium)] px-3 py-2 text-base font-medium text-[var(--primary)] transition hover:bg-white"
                 >
                   {tag}
                 </Link>
@@ -120,7 +121,7 @@ export default async function JobsPage() {
 
         <section className="mt-10">
           {jobs.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {jobs.map((job) => (
                 <JobCard key={job.id} job={job} />
               ))}

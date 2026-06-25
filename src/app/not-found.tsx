@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
       <div className="max-w-md text-center">
         <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
           404
@@ -11,7 +11,7 @@ export default function NotFound() {
           Page introuvable
         </h1>
         <p className="mt-4 text-slate-600">
-          La page demandée n'existe pas ou n'est plus disponible.
+          La page demandée n&apos;existe pas ou n&apos;est plus disponible.
         </p>
         <Link
           href="/offres"

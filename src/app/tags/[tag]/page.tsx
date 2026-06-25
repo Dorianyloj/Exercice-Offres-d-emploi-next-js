@@ -6,7 +6,7 @@ import { JobCard } from "@/components/JobCard";
 import { MaterialSymbol } from "@/components/MaterialSymbol";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { getTagHref, getTagSlug, getTechnologyTags } from "@/lib/tags";
+import { getTagSlug, getTechnologyTags } from "@/lib/tags";
 import { createClient } from "@/prismicio";
 import type {
   FooterDocument,
@@ -76,7 +76,7 @@ export default async function TagPage({ params }: TagPageProps) {
   }`;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--background)]">
       <SiteHeader header={header} />
 
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -88,53 +88,23 @@ export default async function TagPage({ params }: TagPageProps) {
             >
               Toutes les offres
             </Link>
-            <h1 className="mt-3 text-4xl font-semibold leading-tight text-slate-950">
-              Offres avec {currentTag}
+            <h1 className="mt-3 text-5xl font-medium leading-none text-[var(--dark)]">
+              {currentTag}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-              Retrouvez toutes les offres d&apos;emploi associées à cette
-              technologie.
-            </p>
+            <div className="mt-3 h-1 w-full max-w-[420px] bg-[var(--primary)]" />
           </div>
 
-          <div className="inline-flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-800">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-slate-950 text-white">
+          <div className="inline-flex items-center gap-3 bg-white px-4 py-3 text-[var(--dark)]">
+            <span className="inline-flex h-10 w-10 items-center justify-center bg-[var(--primary)] text-white">
               <MaterialSymbol name="business_center" className="text-[22px]" />
             </span>
             <span className="text-lg font-semibold">{jobCountLabel}</span>
           </div>
         </section>
 
-        {allTags.length > 0 ? (
-          <section className="mt-10">
-            <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500">
-              Technologies
-            </h2>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {allTags.map((tag) => {
-                const isActive = tag === currentTag;
-
-                return (
-                  <Link
-                    key={tag}
-                    href={getTagHref(tag)}
-                    className={
-                      isActive
-                        ? "rounded-md border border-slate-950 bg-slate-950 px-3 py-2 text-sm font-medium text-white"
-                        : "rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100"
-                    }
-                  >
-                    {tag}
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        ) : null}
-
         <section className="mt-10">
           {filteredJobs.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {filteredJobs.map((job) => (
                 <JobCard key={job.id} job={job} />
               ))}
