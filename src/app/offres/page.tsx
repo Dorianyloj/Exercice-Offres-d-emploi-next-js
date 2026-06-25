@@ -77,7 +77,7 @@ export default async function JobsPage() {
             </h1>
             <div className="mt-3 h-1 w-full max-w-[420px] bg-[var(--primary)]" />
               <div className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-                <PrismicRichText field={page.data.description} />
+                <PrismicRichText field={page?.data.description} />
               </div>
           </div>
 
