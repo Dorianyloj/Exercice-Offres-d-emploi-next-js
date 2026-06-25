@@ -1,0 +1,88 @@
+{
+  "id": "job_offer",
+  "label": "Offre d'emploi",
+  "format": "page",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID",
+          "placeholder": "developpeur-front-end"
+        }
+      },
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1",
+          "label": "Titre"
+        }
+      },
+      "company": {
+        "type": "Text",
+        "config": {
+          "label": "Entreprise",
+          "placeholder": "Nom de l'entreprise"
+        }
+      },
+      "location": {
+        "type": "Text",
+        "config": {
+          "label": "Lieu",
+          "placeholder": "Paris, Remote..."
+        }
+      },
+      "contract_type": {
+        "type": "Select",
+        "config": {
+          "label": "Type de contrat",
+          "options": ["CDI", "CDD", "Alternance", "Stage", "Freelance"]
+        }
+      },
+      "published_at": {
+        "type": "Date",
+        "config": {
+          "label": "Date de publication"
+        }
+      },
+      "is_available": {
+        "type": "Boolean",
+        "config": {
+          "label": "Offre disponible",
+          "default_value": true
+        }
+      },
+      "admin_emails": {
+        "type": "Group",
+        "config": {
+          "label": "Emails administrateurs",
+          "fields": {
+            "email": {
+              "type": "Text",
+              "config": {
+                "label": "Email",
+                "placeholder": "admin@example.com"
+              }
+            }
+          }
+        }
+      },
+      "excerpt": {
+        "type": "StructuredText",
+        "config": {
+          "single": "paragraph",
+          "label": "Résumé"
+        }
+      },
+      "content": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "heading2,heading3,paragraph,strong,em,hyperlink,list-item,o-list-item",
+          "label": "Contenu de l'offre"
+        }
+      }
+    }
+  }
+}
