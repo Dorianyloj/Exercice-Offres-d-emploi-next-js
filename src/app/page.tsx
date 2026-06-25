@@ -17,7 +17,7 @@ import type {
 
 export const dynamic = "force-dynamic";
 
-async function getSingleOrNull<TDocument extends prismic.PrismicDocument>(
+async function getSingleOrNull<TDocument extends prismic.Content.AllDocumentTypes>(
   type: TDocument["type"],
 ) {
   const client = createClient();

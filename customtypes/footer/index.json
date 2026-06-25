@@ -19,6 +19,33 @@
           "label": "Copyright",
           "placeholder": "© 2026 Offres d'emploi"
         }
+      },
+      "link": {
+        "type": "Group",
+        "config": {
+          "label": "link",
+          "repeat": true,
+          "fields": {
+            "text_link": {
+              "type": "Text",
+              "config": {
+                "label": "text link",
+                "placeholder": ""
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "link",
+                "placeholder": "",
+                "select": null,
+                "allowTargetBlank": true,
+                "allowText": true,
+                "repeat": false
+              }
+            }
+          }
+        }
       }
     }
   }

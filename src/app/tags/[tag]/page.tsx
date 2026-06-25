@@ -22,7 +22,7 @@ type TagPageProps = {
   }>;
 };
 
-async function getSingleOrNull<TDocument extends prismic.PrismicDocument>(
+async function getSingleOrNull<TDocument extends prismic.Content.AllDocumentTypes>(
   type: TDocument["type"],
 ) {
   const client = createClient();
