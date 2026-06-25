@@ -11,6 +11,7 @@ type PinsState = {
   applications: JobOfferDocument[];
   pins: JobOfferDocument[];
   removePin: (job: JobOfferDocument) => void;
+  syncAvailablePins: (availableUIDs: string[]) => void;
 };
 
 export const usePinsStore = create<PinsState>()(
@@ -35,6 +36,13 @@ export const usePinsStore = create<PinsState>()(
       removePin: (job) =>
         set((state) => ({
           pins: state.pins.filter((pin) => pin.uid !== job.uid),
+        })),
+      syncAvailablePins: (availableUIDs) =>
+        set((state) => ({
+          applications: state.applications.filter((application) =>
+            availableUIDs.includes(application.uid),
+          ),
+          pins: state.pins.filter((pin) => availableUIDs.includes(pin.uid)),
         })),
     }),
     {

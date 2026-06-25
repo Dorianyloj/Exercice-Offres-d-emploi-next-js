@@ -6,7 +6,6 @@ import { getJobOffers } from "@/lib/prismicQueries";
 export async function GET() {
   const jobs = await getJobOffers();
   const latestAvailableJobs = jobs
-    .filter((job) => job.data.is_available)
     .slice(0, 3)
     .map((job) => ({
       company: job.data.company,
