@@ -21,7 +21,7 @@ export function JobMessageForm({
         name="message"
         rows={5}
         required
-        className="mt-4 w-full border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--primary)]"
+        className="mt-4 w-full border-2 border-[var(--primary)] bg-white px-4 py-3 text-[var(--primary)] outline-none transition placeholder:text-[var(--primary)]"
         placeholder="Postuler à cette offre ..."
       />
 
