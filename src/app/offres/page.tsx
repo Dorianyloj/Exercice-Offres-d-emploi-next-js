@@ -4,6 +4,7 @@ import { PrismicRichText } from "@prismicio/react";
 import { JobCountBadge } from "@/components/JobCountBadge";
 import { JobsGrid } from "@/components/JobsGrid";
 import { PageShell } from "@/components/PageShell";
+import { PageTitle } from "@/components/PageTitle";
 import { getJobOffers, getSingleOrNull } from "@/lib/prismicQueries";
 import { getTechnologyTags } from "@/lib/tags";
 import type {
@@ -34,10 +35,7 @@ export default async function JobsPage() {
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-3xl">
-            <h1 className="text-5xl font-medium leading-none text-[var(--dark)]">
-              {title}
-            </h1>
-            <div className="mt-3 h-1 w-full max-w-[420px] bg-[var(--primary)]" />
+            <PageTitle>{title}</PageTitle>
             <div className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
               <PrismicRichText field={page?.data.description} />
             </div>
@@ -47,9 +45,6 @@ export default async function JobsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500">
-            Technologies
-          </h2>
           <TechnologyTagList tags={tags} />
         </section>
 

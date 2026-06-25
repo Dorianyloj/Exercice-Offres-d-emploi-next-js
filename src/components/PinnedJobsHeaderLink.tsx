@@ -11,11 +11,11 @@ export function PinnedJobsHeaderLink() {
   return (
     <Link
       href="/profil"
-      className="inline-flex h-10 items-center justify-center gap-1 rounded-full border border-slate-200 px-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+      className="inline-flex h-10 items-center justify-center gap-1 rounded-full border border-white/30 px-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-black/10"
       aria-label="Profil"
     >
-      <span>{pins.length}</span>
-      <MaterialSymbol name="account_circle" className="text-[22px]" />
+      <span className="text-white">{pins.length}</span>
+      <MaterialSymbol name="account_circle" className="text-white" />
     </Link>
   );
 }

@@ -1,9 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ButtonLink } from "@/components/ButtonLink";
 import { JobCountBadge } from "@/components/JobCountBadge";
 import { JobsGrid } from "@/components/JobsGrid";
 import { PageShell } from "@/components/PageShell";
+import { PageTitle } from "@/components/PageTitle";
 import { getJobOffers, getSingleOrNull } from "@/lib/prismicQueries";
 import { getTagSlug, getTechnologyTags } from "@/lib/tags";
 import type { FooterDocument, HeaderDocument } from "@/types/prismic";
@@ -38,16 +39,10 @@ export default async function TagPage({ params }: TagPageProps) {
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-3xl">
-            <Link
-              href="/offres"
-              className="text-sm font-medium text-slate-500 transition hover:text-slate-900"
-            >
-              Toutes les offres
-            </Link>
-            <h1 className="mt-3 text-5xl font-medium leading-none text-[var(--dark)]">
-              {currentTag}
-            </h1>
-            <div className="mt-3 h-1 w-full max-w-[420px] bg-[var(--primary)]" />
+            <ButtonLink href="/offres">
+              {'< Toutes les offres'}
+            </ButtonLink>
+            <PageTitle className="mt-3">{currentTag}</PageTitle>
           </div>
 
           <JobCountBadge count={filteredJobs.length} />
