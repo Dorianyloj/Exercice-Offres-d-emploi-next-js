@@ -80,6 +80,7 @@ export default async function JobOfferPage({ params }: JobOfferPageProps) {
 
           <JobMessageForm
             adminEmails={adminEmails}
+            job={job}
             jobTitle={title}
             jobUid={job.uid}
           />

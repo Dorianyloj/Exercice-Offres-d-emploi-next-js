@@ -1,18 +1,30 @@
+"use client";
+
 import jobMessageAction from "@/actions/job-message";
+import { usePinsStore } from "@/store/pins";
+import type { JobOfferDocument } from "@/types/prismic";
 
 type JobMessageFormProps = {
   adminEmails: string[];
+  job: JobOfferDocument;
   jobTitle: string;
   jobUid: string;
 };
 
 export function JobMessageForm({
   adminEmails,
+  job,
   jobTitle,
   jobUid,
 }: JobMessageFormProps) {
+  const addApplication = usePinsStore((state) => state.addApplication);
+
   return (
-    <form action={jobMessageAction} className="mt-10 border-t border-slate-200 pt-8">
+    <form
+      action={jobMessageAction}
+      className="mt-10 border-t border-slate-200 pt-8"
+      onSubmit={() => addApplication(job)}
+    >
       <input type="hidden" name="adminEmails" value={adminEmails.join(",")} />
       <input type="hidden" name="jobTitle" value={jobTitle} />
       <input type="hidden" name="jobUid" value={jobUid} />

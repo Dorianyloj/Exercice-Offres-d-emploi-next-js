@@ -30,7 +30,7 @@ export function PinJobButton({ job, title }: PinJobButtonProps) {
       onClick={() => (isPinned ? removePin(job) : addPin(job))}
     >
       <MaterialSymbol
-        name={isPinned ? "keep_off" : "keep"}
+        name={isPinned ? "bookmark_added" : "bookmark"}
         className="text-[22px]"
       />
     </button>
