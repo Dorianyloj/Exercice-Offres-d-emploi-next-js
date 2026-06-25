@@ -12,6 +12,7 @@ import {
 } from "@/lib/prismicQueries";
 import type { FooterDocument, HeaderDocument } from "@/types/prismic";
 import { JobMessageForm } from "./_components/JobMessageForm";
+import { ButtonLink } from "@/components/ButtonLink";
 
 export const dynamic = "force-dynamic";
 
@@ -55,8 +56,14 @@ export default async function JobOfferPage({ params }: JobOfferPageProps) {
   return (
     <PageShell header={header} footer={footer}>
       <main className="mx-auto w-full max-w-[1600px] px-4 py-10 sm:px-6 lg:px-8">
-        <article className="bg-white px-5 py-8 sm:px-10 lg:px-14">
-          <PageTitle>{title}</PageTitle>
+        <article className="px-5 py-8 sm:px-10 lg:px-14">
+          <div className="max-w-3xl">
+            <ButtonLink  className="mb-4" href="/offres">
+              {'< Toutes les offres'}
+            </ButtonLink>
+            <PageTitle>{title}</PageTitle>
+          </div>
+          
 
           {publishedAt ? (
             <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
