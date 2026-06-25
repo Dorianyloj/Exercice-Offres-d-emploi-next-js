@@ -39,6 +39,26 @@ export async function getJobOffers({ limit }: { limit?: number } = {}) {
   }
 }
 
+export async function getJobOffersPage({
+  page,
+  pageSize,
+}: {
+  page: number;
+  pageSize: number;
+}) {
+  const client = createClient();
+
+  try {
+    return await client.getByType<JobOfferDocument>("job_offer", {
+      orderings: jobOfferOrderings,
+      page,
+      pageSize,
+    });
+  } catch {
+    return null;
+  }
+}
+
 export async function getJobOfferByUID(uid: string) {
   const client = createClient();
 

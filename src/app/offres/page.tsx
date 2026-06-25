@@ -6,25 +6,69 @@ import { JobsGrid } from "@/components/JobsGrid";
 import { PageShell } from "@/components/PageShell";
 import { PageTitle } from "@/components/PageTitle";
 import { TechnologyTagList } from "@/components/TechnologyTagList";
-import { getJobOffers, getSingleOrNull } from "@/lib/prismicQueries";
+import {
+  getJobOffers,
+  getJobOffersPage,
+  getSingleOrNull,
+} from "@/lib/prismicQueries";
 import { getTechnologyTags } from "@/lib/tags";
 import type {
   FooterDocument,
   HeaderDocument,
   JobListDocument,
 } from "@/types/prismic";
+import { Pagination } from "./_components/Pagination";
 
 export const dynamic = "force-dynamic";
 
-export default async function JobsPage() {
-  const [header, footer, page, jobs] = await Promise.all([
+const JOBS_PER_PAGE = 6;
+
+type JobsPageProps = {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+};
+
+function getRequestedPage(page: string | undefined) {
+  const parsedPage = Number(page);
+
+  if (!Number.isInteger(parsedPage) || parsedPage < 1) {
+    return 1;
+  }
+
+  return parsedPage;
+}
+
+export default async function JobsPage({ searchParams }: JobsPageProps) {
+  const { page: pageParam } = await searchParams;
+  const requestedPage = getRequestedPage(pageParam);
+  const [header, footer, page, jobsForTags, requestedJobsPage] = await Promise.all([
     getSingleOrNull<HeaderDocument>("header"),
     getSingleOrNull<FooterDocument>("footer"),
     getSingleOrNull<JobListDocument>("job_list"),
     getJobOffers(),
+    getJobOffersPage({
+      page: requestedPage,
+      pageSize: JOBS_PER_PAGE,
+    }),
   ]);
 
-  const tags = getTechnologyTags(jobs);
+  let jobsPage = requestedJobsPage;
+  let totalPages = Math.max(1, jobsPage?.total_pages || 1);
+  let currentPage = Math.min(requestedPage, totalPages);
+
+  if (requestedPage > totalPages) {
+    jobsPage = await getJobOffersPage({
+      page: currentPage,
+      pageSize: JOBS_PER_PAGE,
+    });
+    totalPages = Math.max(1, jobsPage?.total_pages || 1);
+    currentPage = Math.min(currentPage, totalPages);
+  }
+
+  const jobs = jobsPage?.results || [];
+  const totalJobs = jobsPage?.total_results_size || 0;
+  const tags = getTechnologyTags(jobsForTags);
   const title =
     page && prismic.asText(page.data.title)
       ? prismic.asText(page.data.title)
@@ -41,7 +85,7 @@ export default async function JobsPage() {
             </div>
           </div>
 
-          <JobCountBadge count={jobs.length} />
+          <JobCountBadge count={totalJobs} />
         </section>
 
         <section className="mt-10">
@@ -53,6 +97,7 @@ export default async function JobsPage() {
             jobs={jobs}
             emptyMessage="Aucune offre publiée pour le moment."
           />
+          <Pagination currentPage={currentPage} totalPages={totalPages} />
         </section>
       </main>
     </PageShell>
