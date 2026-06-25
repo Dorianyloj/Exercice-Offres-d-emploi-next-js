@@ -38,3 +38,13 @@ export async function getJobOffers({ limit }: { limit?: number } = {}) {
     return [];
   }
 }
+
+export async function getJobOfferByUID(uid: string) {
+  const client = createClient();
+
+  try {
+    return await client.getByUID<JobOfferDocument>("job_offer", uid);
+  } catch {
+    return null;
+  }
+}
